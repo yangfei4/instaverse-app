@@ -54,7 +54,7 @@ export default function AppBar() {
                 <Avatar style={style.avatar} alt="username" size="large">
                     {user?.result?.username?.charAt(0)?.toUpperCase()}
                 </Avatar>
-                <Title style={style.title} level={4}>
+                <Title style={{...style.title, "margin-right": "10px"}} level={4}>
                     {user?.result?.username}
                 </Title>
                 <Button onClick={logout} htmlType='button'>
