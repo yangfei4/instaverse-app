@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const api = axios.create({ baseURL: "https://instaverse-platform-dc50575efa33.herokuapp.com/" });
+const api = axios.create({ baseURL: "https://instaverse-app.adaptable.app" });
 
 api.interceptors.request.use((req) => {
     if(localStorage.getItem("profile")){
