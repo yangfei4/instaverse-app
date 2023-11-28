@@ -3,7 +3,6 @@ import bcrypt from "bcryptjs"; // hash the password
 import User from "../models/user.js";
 
 const login = async (req, res) => {
-    console.log("login request body", req.body);
     const { email, password } = req.body;
     try {
         const oldUser = await User.findOne({ email });
