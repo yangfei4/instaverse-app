@@ -12,6 +12,7 @@ export const login = (formValues, navigate) => async dispatch => {
         });
         navigate("/");
     } catch (error) {
+        window.alert("Invalid password or email");
         console.log(error.message);
     }
 };
@@ -25,6 +26,7 @@ export const signup = (formValues, navigate) => async dispatch => {
         });
         navigate("/");
     } catch (error) {
+        window.alert("Please provide valid credentials");
         console.log(error.message);
     }
 };

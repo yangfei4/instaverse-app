@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs"; // hash the password
 import User from "../models/user.js";
 
 const login = async (req, res) => {
+    console.log("login request body", req.body);
     const { email, password } = req.body;
     try {
         const oldUser = await User.findOne({ email });
@@ -11,14 +12,19 @@ const login = async (req, res) => {
             return res.status(404).json({ msg: "User does not exist" });
         }
 
-        const isPasswordValid = bcrypt.compare(password, oldUser.password);
-
-        if(!isPasswordValid){
-            return res.status(400).json({ msg: "Invalid Password" });
-        }
-
-        const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, "1234", { expiresIn: "1h" });
-        res.status(200).json({ result: oldUser, token });
+        bcrypt.compare(password, oldUser.password)
+            .then((isPasswordValid) => {
+                if(!isPasswordValid){
+                    return res.status(400).json({ msg: "Invalid Password" });
+                }
+                else {
+                    const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, "1234", { expiresIn: "1h" });
+                    res.status(200).json({ result: oldUser, token });
+                }
+            })
+            .catch((err) => {
+                console.log("bcrypt error", err);
+            });
     } catch (error) {
         res.status(500).json({ msg: "Something went wrong" });
     }

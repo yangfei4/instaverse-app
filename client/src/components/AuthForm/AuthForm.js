@@ -105,7 +105,7 @@ const AuthForm = () => {
           </Form.Item>
           <Form.Item>
             <p style={{color: 'gray'}}>Demo email: demo@example.com</p>
-            <p style={{color: 'gray'}}>Password: 123</p>
+            <p style={{color: 'gray'}}>Password: demo123</p>
           </Form.Item>
         </Form>
       </Card>

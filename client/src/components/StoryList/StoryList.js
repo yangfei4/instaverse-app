@@ -7,8 +7,6 @@ import Story from "../Story";
 function StoryList({ setSelectedId }) {
   const stories = useSelector((state) => state.stories);
 
-  console.log("stories in StoryList", stories);
-
   return !stories.length ? 
   <div style={{textAlign: 'center'}}>
     <Spin size='large'/>
