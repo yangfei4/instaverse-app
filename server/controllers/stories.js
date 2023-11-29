@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import Story from "../models/storyContent.js";
+import uploadToS3 from "../service/s3Service.js";
+import { v4 as uuidv4 } from 'uuid';
 
 // Store all logic(handler function) for all rountes
 const getStories = async (req, res) => {
@@ -14,14 +16,20 @@ const getStories = async (req, res) => {
 const createStory = async (req, res) => {
 
     const body = req.body;
-    //TODO(yangfei): upload body.image to amazon s3
-    const newStory = new Story({
-        ...body,
-        userId: req.userId,
-        postDate: new Date().toISOString()
-    });
+    const imageKey = `images/${uuidv4()}.jpg`;
 
     try {
+        // body.image is data:image/jpeg;base64,/9j/4AAQSkZJRgABAQ...
+        // so we need to remove the first part (data:image/jpeg;base64,) and keep the second part
+        const imageData = Buffer.from(body.image.split(',')[1], 'base64');
+        const imageUrl = await uploadToS3(imageData, imageKey);
+
+        const newStory = new Story({
+            ...body,
+            userId: req.userId,
+            postDate: new Date().toISOString(),
+            image: imageUrl
+        });
         newStory.save();
         res.status(201).json(newStory);
     } catch(error){
