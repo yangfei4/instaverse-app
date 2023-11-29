@@ -8,6 +8,7 @@ A full-stack Social Media project application using Node.js, Express, React, and
 ## 🛠 Skills, Libraries, and Tools Used
 - **Nodejs & Express**: An extensive backend API.
 - **React**: State management with Redux, React Hooks, Async/Await and so on.
+- **Amazon S3**: Images will be uploaded to Amazon S3 bucket with public-read access.
 - **User Authentication**: JWT Authentication.
 - **Axios**: A promise-based HTTP client for making asynchronous requests to the TMDB API.
 - **SCSS/CSS**: For styling the components and making the UI responsive.
