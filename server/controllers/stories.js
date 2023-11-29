@@ -23,9 +23,13 @@ const createStory = async (req, res) => {
         // so we need to remove the first part (data:image/jpeg;base64,) and keep the second part
         const imageData = Buffer.from(body.image.split(',')[1], 'base64');
         const imageUrl = await uploadToS3(imageData, imageKey);
+        console.log("imageUrl: ", imageUrl);
+
+        delete body.image;
 
         const newStory = new Story({
             ...body,
+            title: body.title,            
             userId: req.userId,
             postDate: new Date().toISOString(),
             image: imageUrl
