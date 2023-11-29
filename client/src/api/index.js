@@ -1,6 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({ baseURL: "https://instaverse-app.adaptable.app" });
+// const api = axios.create({ baseURL: "http://localhost:5001" });
+
 
 api.interceptors.request.use((req) => {
     if(localStorage.getItem("profile")){

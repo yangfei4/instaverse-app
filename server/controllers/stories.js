@@ -14,6 +14,7 @@ const getStories = async (req, res) => {
 const createStory = async (req, res) => {
 
     const body = req.body;
+    //TODO(yangfei): upload body.image to amazon s3
     const newStory = new Story({
         ...body,
         userId: req.userId,
@@ -64,18 +65,23 @@ const likeStory = async (req, res) => {
         return res.status(404).send("This is id doesn't belong to any story");
     }
 
-    const story = await Story.findById(_id);
+    try {
+        const result = await Story.updateOne(
+            { _id, likes: { $ne: req.userId } }, // Add user ID if not already present
+            { $addToSet: { likes: req.userId } }
+        );
 
-    const index = story.likes.findIndex(id => id === String(req.userId));
-    if(index === -1){ //the story is not liked by the user 
-        story.likes.push(req.userId);
-    } else{
-        story.likes.splice(index, 1);
+        if (result.modifiedCount === 0) {
+            // User already liked the story, so remove the like
+            await Story.updateOne({ _id }, { $pull: { likes: req.userId } });
+        }
+
+        const updatedStory = await Story.findById(_id);
+        res.json(updatedStory);
+    } catch (error) {
+        console.error("Error updating story:", error);
+        res.status(500).send("Internal Server Error");
     }
-
-    const updatedStory = await Story.findByIdAndUpdate(_id, story, { new: true });
-
-    res.json(updatedStory);
 }
 
 export { getStories, createStory, updateStory, deleteStory, likeStory };
