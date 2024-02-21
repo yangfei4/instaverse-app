@@ -2,7 +2,7 @@
 A full-stack Social Media project application using Node.js, Express, React, and MongoDB. User can make posts with tags and images, like posts and modify the posts they made.
 
 <p align="center">
-<img src="https://github.com/yangfei4/yangfei4.github.io/blob/main/src/assets/project1.jpg?raw=true" width="500" />
+<img src="https://github.com/yangfei4/instaverse-app/blob/86dc5022e4188fa1f1bfdc79a11d2eba668ab6c4/assets/demo.jpeg?raw=true" width="500" />
 </p>
 
 ## 🛠 Skills, Libraries, and Tools Used
